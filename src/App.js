@@ -8,7 +8,8 @@ import db from'./firebase';
 
 function App() {
    const [todos, setTodos] =useState([]);
-   const [input, setInput] =useState('');
+   const [title, setTitle] =useState('');
+   const [deadLine,setDeadLine]=useState(new Date());
    
    useEffect(() => {
      db.collection('todos').orderBy('timestamp', 'desc').onSnapshot(snapshot => {
@@ -21,6 +22,7 @@ function App() {
 
      db.collection('todos').add({
        todo: input,
+       deadline:deadLine,
        timestamp: firebase.firestore.FieldValue.serverTimestamp()
      })
     setTodos([...todos, input]);
@@ -33,7 +35,8 @@ function App() {
        <form>
        <FormControl>
        <InputLabel >Write a to do</InputLabel>
-       <Input value={input} onChange={event => setInput(event.target.value)} />
+       <Input value={title} onChange={event => setTitle(event.target.value)} />
+       <Input value={deadLine} type="date" onChange={event => setDeadLine(event.target.value)} />
        </FormControl>
        <Button disabled={!input} type="submit" variant="contained" color="primary" onClick={addTodo}> Add To Do </Button>
        </form>
@@ -41,7 +44,6 @@ function App() {
        <ul>
          {todos.map(todo => (
            <ToDO todo={todo}/>
-           //<li>{todo}</li>
          ))}
        </ul>
     </div>
