@@ -21,12 +21,12 @@ function App() {
      event.preventDefault();
 
      db.collection('todos').add({
-       todo: input,
+       todo: title,
        deadline:deadLine,
        timestamp: firebase.firestore.FieldValue.serverTimestamp()
      })
-    setTodos([...todos, input]);
-    setInput('');
+    setTodos([...todos, title]);
+    setTitle('');
    }
 
   return (
@@ -38,7 +38,7 @@ function App() {
        <Input value={title} onChange={event => setTitle(event.target.value)} />
        <Input value={deadLine} type="date" onChange={event => setDeadLine(event.target.value)} />
        </FormControl>
-       <Button disabled={!input} type="submit" variant="contained" color="primary" onClick={addTodo}> Add To Do </Button>
+       <Button disabled={!title} type="submit" variant="contained" color="primary" onClick={addTodo}> Add To Do </Button>
        </form>
        
        <ul>
